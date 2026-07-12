@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amy Web · portfolio</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: #0b0d10;
+      color: #eef2f6;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ===== DYNAMIC BACKGROUND ANIMATION ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(108, 140, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(108, 140, 255, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(20, 30, 50, 0.3) 0%, transparent 70%);
+      z-index: -1;
+      animation: backgroundPulse 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes backgroundPulse {
+      0% {
+        opacity: 0.6;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 0.7;
+        transform: scale(0.95);
+      }
+    }
+
+    /* Floating particles (dynamic) */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(108, 140, 255, 0.3);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-duration: 18s; animation-delay: 0s; width: 6px; height: 6px; }
+    .particle:nth-child(2) { left: 25%; animation-duration: 22s; animation-delay: 2s; width: 4px; height: 4px; }
+    .particle:nth-child(3) { left: 45%; animation-duration: 20s; animation-delay: 4s; width: 8px; height: 8px; opacity: 0.2; }
+    .particle:nth-child(4) { left: 65%; animation-duration: 25s; animation-delay: 1s; width: 5px; height: 5px; }
+    .particle:nth-child(5) { left: 80%; animation-duration: 19s; animation-delay: 3s; width: 7px; height: 7px; opacity: 0.15; }
+    .particle:nth-child(6) { left: 90%; animation-duration: 23s; animation-delay: 5s; width: 4px; height: 4px; }
+    .particle:nth-child(7) { left: 50%; animation-duration: 21s; animation-delay: 7s; width: 6px; height: 6px; opacity: 0.25; }
+    .particle:nth-child(8) { left: 15%; animation-duration: 26s; animation-delay: 2s; width: 3px; height: 3px; }
+    .particle:nth-child(9) { left: 70%; animation-duration: 17s; animation-delay: 6s; width: 9px; height: 9px; opacity: 0.1; }
+    .particle:nth-child(10) { left: 35%; animation-duration: 24s; animation-delay: 4s; width: 5px; height: 5px; }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) rotate(0deg) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(720deg) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Glow line animation (horizontal) */
+    .glow-line {
+      position: fixed;
+      top: 50%;
+      left: -10%;
+      width: 120%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(108, 140, 255, 0.1), transparent);
+      z-index: -1;
+      animation: glowSweep 14s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .glow-line:nth-child(2) {
+      top: 30%;
+      animation-duration: 18s;
+      animation-delay: 3s;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(108, 140, 255, 0.06), transparent);
+    }
+
+    .glow-line:nth-child(3) {
+      top: 70%;
+      animation-duration: 16s;
+      animation-delay: 6s;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(108, 140, 255, 0.08), transparent);
+    }
+
+    @keyframes glowSweep {
+      0% {
+        transform: translateX(-30%) scaleX(0.5);
+        opacity: 0;
+      }
+      30% {
+        opacity: 1;
+      }
+      70% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(30%) scaleX(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Floating orbs (dynamic) */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -1;
+      animation: orbFloat 20s ease-in-out infinite alternate;
+    }
+
+    .orb:nth-child(1) {
+      width: 400px;
+      height: 400px;
+      background: rgba(108, 140, 255, 0.05);
+      top: -100px;
+      left: -100px;
+      animation-duration: 25s;
+    }
+
+    .orb:nth-child(2) {
+      width: 300px;
+      height: 300px;
+      background: rgba(108, 140, 255, 0.04);
+      bottom: -50px;
+      right: -50px;
+      animation-duration: 30s;
+      animation-delay: 5s;
+    }
+
+    .orb:nth-child(3) {
+      width: 200px;
+      height: 200px;
+      background: rgba(108, 140, 255, 0.03);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-duration: 22s;
+      animation-delay: 10s;
+    }
+
+    @keyframes orbFloat {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(50px, -30px) scale(1.1);
+      }
+      66% {
+        transform: translate(-20px, 40px) scale(0.9);
+      }
+      100% {
+        transform: translate(30px, -20px) scale(1.05);
+      }
+    }
+
+    /* ----- navigation (glass) ----- */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 24, 30, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 60px;
+      padding: 14px 32px;
+      display: flex;
+      gap: 42px;
+      z-index: 999;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7);
+      transition: all 0.2s;
+    }
+    .navbar a {
+      color: #d0d9e8;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: 0.2s;
+      position: relative;
+    }
+    .navbar a i {
+      margin-right: 8px;
+      font-size: 0.9rem;
+    }
+    .navbar a:hover {
+      color: #ffffff;
+    }
+    .navbar a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #6c8cff;
+      transition: 0.25s;
+    }
+    .navbar a:hover::after {
+      width: 100%;
+    }
+
+    /* ----- main container (pages) ----- */
+    .pages {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+    }
+
+    /* each "page" = section */
+    .page-section {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px 0 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      scroll-margin-top: 100px;
+    }
+    .page-section:last-child {
+      border-bottom: none;
+    }
+
+    /* hero / about */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero-content h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f0f5ff, #b2c9ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-content .tagline {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #b6c8e5;
+      margin: 18px 0 24px;
+    }
+    .hero-content p {
+      color: #b0c0da;
+      max-width: 480px;
+      font-size: 1.05rem;
+      margin-bottom: 28px;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .btn {
+      background: transparent;
+      border: 1px solid #3a4458;
+      padding: 12px 32px;
+      border-radius: 40px;
+      color: #eef2f6;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: #6c8cff;
+      border: 1px solid #6c8cff;
+      color: #0b0d10;
+      font-weight: 600;
+      box-shadow: 0 8px 20px -8px rgba(108, 140, 255, 0.3);
+    }
+    .btn-primary:hover {
+      background: #5a7ae6;
+      border-color: #5a7ae6;
+      transform: scale(1.02);
+      box-shadow: 0 12px 28px -10px #4a6ad0;
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: #7a8bb0;
+    }
+    .hero-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .avatar-box {
+      background: linear-gradient(145deg, #161c26, #0e121a);
+      border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+      padding: 18px;
+      box-shadow: 0 30px 40px -20px #00000080, inset 0 0 0 1px #2c3547;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: avatarGlow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes avatarGlow {
+      0% {
+        box-shadow: 0 30px 40px -20px #00000080, inset 0 0 0 1px #2c3547;
+      }
+      100% {
+        box-shadow: 0 30px 60px -10px rgba(108, 140, 255, 0.2), inset 0 0 0 2px #6c8cff55;
+      }
+    }
+
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+      animation: avatarRotate 20s linear infinite;
+    }
+
+    @keyframes avatarRotate {
+      0% {
+        transform: rotate(0deg) scale(1);
+      }
+      50% {
+        transform: rotate(3deg) scale(1.02);
+      }
+      100% {
+        transform: rotate(0deg) scale(1);
+      }
+    }
+
+    .avatar-box i {
+      font-size: 9rem;
+      color: #b2c9ff;
+      filter: drop-shadow(0 8px 12px #00000055);
+    }
+
+    /* services / summary sections */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 30px 0 10px;
+    }
+    .summary-card {
+      background: #111820;
+      padding: 24px 20px;
+      border-radius: 28px;
+      border: 1px solid #293241;
+      transition: 0.3s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(108, 140, 255, 0.03) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+    .summary-card:hover::before {
+      opacity: 1;
+    }
+    .summary-card:hover {
+      border-color: #6c8cff;
+      background: #161f2c;
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px -12px rgba(108, 140, 255, 0.15);
+    }
+    .summary-card i {
+      font-size: 2rem;
+      color: #6c8cff;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
+    }
+    .summary-card:hover i {
+      transform: scale(1.15) rotate(-5deg);
+    }
+    .summary-card h4 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .summary-card p {
+      color: #a0b3d0;
+      font-size: 0.9rem;
+    }
+
+    /* projects grid */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      margin: 30px 0 20px;
+    }
+    .project-card {
+      background: #141a24;
+      border-radius: 28px;
+      padding: 28px 20px 24px;
+      border: 1px solid #262f3e;
+      transition: 0.3s;
+      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #6c8cff, transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+    .project-card:hover::after {
+      transform: scaleX(1);
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      background: #1a222f;
+      border-color: #3d4b64;
+      box-shadow: 0 20px 30px -16px #000000aa;
+    }
+    .project-card i {
+      font-size: 2.4rem;
+      color: #6c8cff;
+      margin-bottom: 14px;
+      transition: transform 0.3s;
+    }
+    .project-card:hover i {
+      transform: scale(1.1) rotate(-5deg);
+    }
+    .project-card h3 {
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .project-card p {
+      color: #a8bbd9;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+    .project-tag {
+      display: inline-block;
+      background: #222d3f;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+      color: #bccdee;
+      border: 1px solid #2f3b51;
+      transition: 0.3s;
+    }
+    .project-card:hover .project-tag {
+      background: #2a3650;
+      border-color: #6c8cff55;
+    }
+
+    /* contact */
+    .contact-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .contact-info {
+      flex: 1 1 220px;
+    }
+    .contact-info h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #d6e2ff, #9bb2f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .contact-info p {
+      color: #b0c0da;
+      margin-bottom: 24px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      color: #c8d6f0;
+    }
+    .contact-item i {
+      width: 28px;
+      font-size: 1.2rem;
+      color: #6c8cff;
+    }
+    .contact-social {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .contact-social a {
+      color: #a8bbd9;
+      font-size: 1.6rem;
+      transition: 0.3s;
+      display: inline-block;
+    }
+    .contact-social a:hover {
+      color: #fff;
+      transform: scale(1.1) translateY(-3px);
+    }
+    .contact-form {
+      flex: 2 1 300px;
+      background: #111820;
+      padding: 30px 28px;
+      border-radius: 32px;
+      border: 1px solid #293241;
+      transition: 0.3s;
+    }
+    .contact-form:hover {
+      border-color: #3d4b64;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: #0b1018;
+      border: 1px solid #29364b;
+      border-radius: 30px;
+      padding: 14px 20px;
+      font-size: 0.95rem;
+      color: #eef2f6;
+      margin-bottom: 16px;
+      transition: 0.3s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #6c8cff;
+      box-shadow: 0 0 0 3px #6c8cff30;
+      background: #0e1622;
+    }
+    .contact-form textarea {
+      min-height: 120px;
+      resize: vertical;
+      border-radius: 24px;
+    }
+    .contact-form .btn {
+      width: 100%;
+      justify-content: center;
+      background: #6c8cff;
+      border: none;
+      font-weight: 600;
+      color: #0b0d10;
+      padding: 14px;
+      transition: 0.3s;
+    }
+    .contact-form .btn:hover {
+      background: #5a7ae6;
+      transform: scale(1.01);
+    }
+
+    /* footer */
+    .footer {
+      text-align: center;
+      padding: 30px 0 16px;
+      color: #6a7c9a;
+      font-size: 0.85rem;
+      border-top: 1px solid #1c2534;
+      margin-top: 40px;
+      letter-spacing: 0.2px;
+    }
+    .footer i {
+      color: #6c8cff;
+      margin: 0 4px;
+      animation: heartBeat 2s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* responsive */
+    @media (max-width: 780px) {
+      .navbar {
+        gap: 18px;
+        padding: 12px 22px;
+        border-radius: 40px;
+        width: 92%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .navbar a {
+        font-size: 0.9rem;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-content p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .btn-group {
+        justify-content: center;
+      }
+      .avatar-box {
+        width: 200px;
+        height: 200px;
+      }
+      .avatar-box i {
+        font-size: 5.5rem;
+      }
+      .hero-content h1 {
+        font-size: 2.8rem;
+      }
+      .contact-wrapper {
+        flex-direction: column;
+      }
+    }
+    @media (max-width: 480px) {
+      .navbar a span {
+        display: none;
+      }
+      .navbar a i {
+        margin-right: 0;
+        font-size: 1.2rem;
+      }
+      .navbar {
+        gap: 12px;
+        padding: 10px 14px;
+      }
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #4e6182;
+      margin-top: 20px;
+    }
+    .scroll-hint i {
+      animation: bounce 1.8s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* section titles */
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      margin-bottom: 8px;
+    }
+    .section-title i {
+      color: #6c8cff;
+      margin-right: 12px;
+    }
+    .section-sub {
+      color: #98aecf;
+      margin-bottom: 30px;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== DYNAMIC BACKGROUND ELEMENTS ===== -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+  <div class="glow-line"></div>
+  <div class="glow-line"></div>
+  <div class="glow-line"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+
+  <!-- navigation: Home / About / Services / Portfolio / Contact -->
+  <nav class="navbar">
+    <a href="#home"><i class="fas fa-home"></i><span>Home</span></a>
+    <a href="#about"><i class="fas fa-user-astronaut"></i><span>About</span></a>
+    <a href="#services"><i class="fas fa-cogs"></i><span>Services</span></a>
+    <a href="#portfolio"><i class="fas fa-code"></i><span>Projects</span></a>
+    <a href="#contact"><i class="fas fa-paper-plane"></i><span>Contact</span></a>
+  </nav>
+
+  <main class="pages">
+
+    <!-- === HOME === -->
+    <section id="home" class="page-section">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>Web Developer</h1>
+          <div class="tagline"><i class="fas fa-sparkles" style="color: #6c8cff; margin-right: 6px;"></i> creative developer & designer</div>
+          <p>
+            I craft digital experiences that are minimal, human, and fast. 
+            From interactive web apps to visual identities — I bring ideas to life 
+            with clean code and a touch of play.
+          </p>
+          <div class="btn-group">
+            <a href="#portfolio" class="btn btn-primary"><i class="fas fa-arrow-right"></i> View Projects</a>
+            <a href="#contact" class="btn btn-outline"><i class="fas fa-comment"></i> Let's talk</a>
+          </div>
+          <div class="scroll-hint" style="margin-top: 30px; text-align: left;">
+            <i class="fas fa-chevron-down"></i> scroll to explore
+          </div>
+        </div>
+        <div class="hero-avatar">
+          <div class="avatar-box">
+            <img src="mdkpp.jpg" alt="Amy Web" style="width: 100%; height: 100%; object-fit: cover; border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === ABOUT === -->
+    <section id="about" class="page-section">
+      <h2 class="section-title"><i class="fas fa-user-astronaut"></i>About Me</h2>
+      <p class="section-sub">Frontend Developer with a passion for clean design and seamless experiences.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+        <div>
+          <p style="color: #b0c0da; font-size: 1.05rem; line-height: 1.7;">
+            I'm Amy — a creative developer & designer based in Berlin. With 3+ years of experience 
+            in frontend development, I love turning complex problems into elegant, intuitive interfaces. 
+            I believe great design is not just how it looks, but how it works.
+          </p>
+          <p style="color: #8aa3d9; margin-top: 16px;">
+            <i class="fas fa-check-circle" style="color: #6c8cff;"></i> React · Vue · Node · Python<br>
+            <i class="fas fa-check-circle" style="color: #6c8cff;"></i> UI/UX · Design Systems · Prototyping
+          </p>
+        </div>
+        <div style="background: #111820; padding: 24px; border-radius: 28px; border: 1px solid #293241;">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div><span style="color: #8aa3d9;">📍</span> Sambhajinagar / remote</div>
+            <div><span style="color: #8aa3d9;">💼</span> Freelance & open for projects</div>
+            <div><span style="color: #8aa3d9;">🎯</span> Worked for 6+ major projects </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === SERVICES (summary sections) === -->
+    <section id="services" class="page-section">
+      <h2 class="section-title"><i class="fas fa-cogs"></i>Our Services</h2>
+      <p class="section-sub">What I bring to the table — from code to design.</p>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <i class="fas fa-laptop-code"></i>
+          <h4>Web Development</h4>
+          <p>Responsive, fast, and accessible frontends with React </p>
+        </div>
+        <div class="summary-card">
+          <i class="fas fa-paint-brush"></i>
+          <h4>Machine Learning </h4>
+          <p> Woked with varous ml project using AI Tools </p>
+        </div>
+        <div class="summary-card">
+          <i class="fas fa-mobile-alt"></i>
+          <h4>Data Analysis</h4>
+          <p>Visualize and preprocess various dataset using Power BI and Matplotlib </p>
+        </div>
+        <div class="summary-card">
+          <i class="fas fa-rocket"></i>
+          <h4>Performance</h4>
+          <p>Optimized load times, SEO, and smooth animations for any device.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- === PORTFOLIO (projects) === -->
+    <section id="portfolio" class="page-section">
+      <h2 class="section-title"><i class="fas fa-code"></i>Projects</h2>
+      <p class="section-sub">A selection of my recent work — each one built with curiosity.</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <i class="fas fa-globe-americas"></i>
+          <h3>Nova</h3>
+          <p>Interactive dashboard for climate data, built with D3 and React.</p>
+          <span class="project-tag">React + D3</span>
+        </div>
+        <div class="project-card">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Pulse</h3>
+          <p>Minimalist health tracker with real-time heart rate visualization.</p>
+          <span class="project-tag">Flutter</span>
+        </div>
+        <div class="project-card">
+          <i class="fas fa-cube"></i>
+          <h3>Orbit</h3>
+          <p>3D product configurator with WebGL &amp; custom shaders.</p>
+          <span class="project-tag">Three.js</span>
+        </div>
+        <div class="project-card">
+          <i class="fas fa-pen-fancy"></i>
+          <h3>Scriptum</h3>
+          <p>Collaborative writing tool with real-time sync &amp; markdown.</p>
+          <span class="project-tag">Node + Vue</span>
+        </div>
+      </div>
+      <div style="margin-top: 20px;">
+        <a href="#" style="color: #8aa3d9; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #3b4a66; padding-bottom: 3px;">
+          <i class="fas fa-arrow-right"></i> view all on GitHub
+        </a>
+      </div>
+    </section>
+
+    <!-- === CONTACT === -->
+    <section id="contact" class="page-section">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h2><i class="fas fa-envelope-open-text" style="color: #6c8cff; margin-right: 12px;"></i>Contact</h2>
+          <p>
+            Have a project in mind or just want to say hello? 
+            I'm always open to interesting conversations.
+          </p>
+          <div class="contact-item">
+            <i class="fas fa-map-pin"></i> <span>Chhatrapati Sambhajinagar / remote</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i> <span>kaleomkar866@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-calendar-alt"></i> <span>available for freelance</span>
+          </div>
+          <div class="contact-social">
+            <a href="https://github.com/kaleomkar866-afk" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form id="contactForm" action="#" method="POST">
+            <input type="text" placeholder="Your name" required />
+            <input type="email" placeholder="Email address" required />
+            <textarea placeholder="Tell me about your idea..."></textarea>
+            <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send message</button>
+          </form>
+          <p style="font-size: 0.75rem; color: #586f94; margin-top: 14px; text-align: center;">
+            <i class="fas fa-lock" style="margin-right: 6px;"></i> your data stays private
+          </p>
+        </div>
+      </div>
+    </section>
+
+    
+
+  <!-- smooth anchor + form feedback -->
+  <script>
+    (function() {
+      document.querySelectorAll('.navbar a, .btn-primary, .btn-outline').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              const navHeight = document.querySelector('.navbar').offsetHeight + 30;
+              const top = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+              window.scrollTo({ top, behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      const form = document.getElementById('contactForm');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('✨ Thanks, Amy will get back to you soon! (demo)');
+          this.reset();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
